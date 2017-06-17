@@ -42,14 +42,14 @@ def sendMsg():
     if not mychat.alive:
         return jsonify({'error': '请先登录'})
     json = request.json
-    return mychat.send(json[u'message'], findUserByName(mychat, json[u'name']))
+    return jsonify(mychat.send(json[u'message'], findUserByName(mychat, json[u'name'])))
 
 @app.route('/send-group', methods=['POST'])
 def sendGroupMsg():
     if not mychat.alive:
         return jsonify({'error': '请先登录'})
     json = request.json
-    return mychat.send(json[u'message'], findGroupUserByName(mychat,json[u'name']))
+    return jsonify(mychat.send(json[u'message'], findGroupUserByName(mychat,json[u'name'])))
 
 
 def findGroupUserByName(mychat, name):
