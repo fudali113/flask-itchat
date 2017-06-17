@@ -1,12 +1,16 @@
 # -*- coding: UTF-8 -*- 
 import itchat
 import logging
-from flask import Flask, jsonify, send_file, request
+from flask import Flask, jsonify, send_file, request, render_template, url_for, redirect
 
 app = Flask(__name__)
 logger = logging.getLogger('app')
 
 mychat = mychat = itchat.Core()
+
+@app.route("/", methods=['GET'])
+def index():
+    return redirect('static/index.html')
 
 
 @app.route('/qr', methods=['GET'])
@@ -29,7 +33,7 @@ def get_isLogging():
     elif status == '201':
         return jsonify({'error': 'Please press confirm on your phone.'})
     elif status == '408':
-        return jsonify({'error': 'please request /qr and scan QR'})
+        return jsonify({'error': 'please request /qr and scan QR', 'status': status})
     mychat.web_init()
     mychat.show_mobile_login()
     mychat.get_contact(True)

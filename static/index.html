@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8"/>
+    <title>扫码登录</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="row">
+    <div class="center-block" style="width:450px; margin-top: 50px">
+        <div class="center-block" style="width:450px;">
+            <div style="width:360px;">
+                <input type="text" class="form-control" id="acl-token" placeholder="acl-token">
+            </div>
+        </div>
+        <div class="center-block">
+            <img id="qr">
+        </div>
+        <div class="center-block" style="width:450px;margin-top: 20px">
+            <button id="login" style="width:360px;" class="btn btn-success btn-lg" data-loading-text="Loading..."
+                    type="button"> 登录
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+
+        $('#qr').attr('src','/qr?random=' + Math.random())
+
+        $("#login").click(function () {
+            var token = $("#acl-token").val()
+            if (token == "") {
+                alert("please input alc-token")
+                return
+            }
+            $.get("/login?token=" + token, function (data) {
+                if (data.error) {
+                    alert(data.error)
+                } else {
+                    alert("success!")
+                }
+            })
+        })
+    });
+</script>
+</html>
